@@ -9,13 +9,19 @@
             "email": "dirtech@smile.fr"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jupitoruiorg/druidfi-mysqldump-php"
+        }
+    ],
     "require": {
         "php": "^8.3",
         "ext-json": "*",
         "ext-pdo": "*",
         "composer-runtime-api": "^2.0",
         "doctrine/dbal": "^4.1",
-        "druidfi/mysqldump-php": "^2.0",
+        "druidfi/mysqldump-php": "^3.0",
         "fakerphp/faker": "^1.17",
         "justinrainbow/json-schema": "^5.3",
         "symfony/config": "^7.3",

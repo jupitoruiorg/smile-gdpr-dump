@@ -161,7 +161,7 @@
                 },
                 "compress": {
                     "type": "string",
-                    "enum": ["none", "gzip", "bzip2"]
+                    "enum": ["none", "gzip", "bzip2", "zstd", "lz4"]
                 },
                 "default_character_set": {
                     "type": "string",
