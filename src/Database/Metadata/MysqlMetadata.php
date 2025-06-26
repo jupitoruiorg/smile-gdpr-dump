@@ -31,11 +31,12 @@ final class MysqlMetadata implements MetadataInterface
 
         $query = 'SELECT TABLE_NAME '
             . 'FROM INFORMATION_SCHEMA.TABLES '
-            . 'WHERE TABLE_TYPE=\'BASE TABLE\' AND TABLE_SCHEMA=? '
-            . 'ORDER BY TABLE_NAME ASC';
+            . 'WHERE TABLE_TYPE=\'BASE TABLE\' AND TABLE_SCHEMA=' . $this->connection->quote($this->schema) . ' '
+            . 'ORDER BY TABLE_NAME ASC'
+        ;
 
-        $statement = $this->connection->prepare($query);
-        $this->tableNames = $statement->executeQuery([$this->schema])->fetchFirstColumn();
+        $statement = $this->connection->executeQuery($query);
+        $this->tableNames = $statement->fetchFirstColumn();
 
         return $this->tableNames;
     }
@@ -48,11 +49,10 @@ final class MysqlMetadata implements MetadataInterface
         if ($this->columnNames === null) {
             $query = 'SELECT TABLE_NAME, COLUMN_NAME '
                 . 'FROM INFORMATION_SCHEMA.COLUMNS '
-                . 'WHERE TABLE_SCHEMA=?'
+                . 'WHERE TABLE_SCHEMA=' . $this->connection->quote($this->schema) . ' '
                 . 'ORDER BY COLUMN_NAME ASC';
 
-            $statement = $this->connection->prepare($query);
-            $result = $statement->executeQuery([$this->schema]);
+            $result = $this->connection->executeQuery($query);
 
             $this->columnNames = [];
 
@@ -64,6 +64,7 @@ final class MysqlMetadata implements MetadataInterface
         return $this->columnNames[$tableName]
             ?? throw new RuntimeException(sprintf('The table "%s" is not defined.', $tableName));
     }
+
 
     /**
      * @inheritdoc
@@ -77,15 +78,14 @@ final class MysqlMetadata implements MetadataInterface
         $query = 'SELECT CONSTRAINT_NAME, TABLE_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME '
             . 'FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE '
             . 'WHERE TABLE_NAME IS NOT NULL AND REFERENCED_TABLE_NAME IS NOT NULL '
-            . 'AND TABLE_SCHEMA=? AND CONSTRAINT_SCHEMA=? '
+            . 'AND TABLE_SCHEMA=' . $this->connection->quote($this->schema)
+            . ' AND CONSTRAINT_SCHEMA=' . $this->connection->quote($this->schema) . ' '
             . 'ORDER BY TABLE_NAME ASC, COLUMN_NAME ASC';
 
-        $statement = $this->connection->prepare($query);
-        $result = $statement->executeQuery([$this->schema, $this->schema]);
+        $result = $this->connection->executeQuery($query);
 
         $fksByTable = [];
 
-        // Prepare an array that groups foreign key data by constraint name
         while ($row = $result->fetchAssociative()) {
             $constraintName = $row['CONSTRAINT_NAME'];
             $tableName = $row['TABLE_NAME'];
@@ -106,7 +106,6 @@ final class MysqlMetadata implements MetadataInterface
 
         $this->foreignKeys = [];
 
-        // Create the foreign keys
         foreach ($fksByTable as $tableName => $fksData) {
             foreach ($fksData as $fkData) {
                 $this->foreignKeys[$tableName][] = new ForeignKey(
@@ -121,6 +120,7 @@ final class MysqlMetadata implements MetadataInterface
 
         return $this->foreignKeys;
     }
+
 
     /**
      * @inheritdoc
