@@ -225,13 +225,27 @@ final class TableFilterListener
      */
     private function getWhereSql(QueryBuilder $queryBuilder): string
     {
-        $wherePart = $queryBuilder->getQueryPart('where');
-        if (empty($wherePart)) {
-            $queryBuilder->where(1);
-        }
-
         $sql = $queryBuilder->getSQL();
 
-        return substr($sql, strpos($sql, ' WHERE ') + 7);
+        if (stripos($sql, 'WHERE') === false) {
+            $queryBuilder->where('1=1');
+            $sql = $queryBuilder->getSQL();
+        }
+
+        $pos = stripos($sql, 'WHERE');
+        if ($pos === false) {
+            return '1=1';
+        }
+
+        return trim(substr($sql, $pos + 5));
+
+        //$wherePart = $queryBuilder->getQueryPart('where');
+        //if (empty($wherePart)) {
+        //    $queryBuilder->where(1);
+        //}
+        //
+        //$sql = $queryBuilder->getSQL();
+        //
+        //return substr($sql, strpos($sql, ' WHERE ') + 7);
     }
 }
