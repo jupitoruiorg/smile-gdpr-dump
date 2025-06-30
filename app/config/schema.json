@@ -221,6 +221,12 @@
                 },
                 "skip_tz_utc": {
                     "type": "boolean"
+                },
+                "with_views": {
+                    "type": "boolean"
+                },
+                "skip_tables": {
+                    "type": "boolean"
                 }
             },
             "additionalProperties": false

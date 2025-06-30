@@ -33,6 +33,8 @@ final class DumperConfig implements DumperConfigInterface
      */
     private array $excludedTables = [];
 
+    private array $includedViews = [];
+
     /**
      * @var string[]
      */
@@ -111,6 +113,11 @@ final class DumperConfig implements DumperConfigInterface
     public function getIncludedTables(): array
     {
         return $this->includedTables;
+    }
+
+    public function getIncludedViews(): array
+    {
+        return $this->includedViews;
     }
 
     /**

@@ -96,6 +96,7 @@ final class MysqlDumper implements DumperInterface
         $settings['include-tables'] = $config->getIncludedTables();
         $settings['exclude-tables'] = $config->getExcludedTables();
         $settings['no-data'] = $config->getTablesToTruncate();
+        //$settings['include-views'] = $config->getIncludedViews();
 
         // Set readonly session
         $settings['init_commands'][] = 'SET SESSION TRANSACTION READ ONLY';

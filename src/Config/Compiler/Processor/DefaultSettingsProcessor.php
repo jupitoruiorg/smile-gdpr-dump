@@ -64,6 +64,8 @@ final class DefaultSettingsProcessor implements ProcessorInterface
                 'skip_dump_date' => false,
                 'skip_triggers' => false,
                 'skip_tz_utc' => false,
+                'with_views' => false,
+                'skip_tables' => false,
             ],
             'filter_propagation' => [
                 'enabled' => true,
