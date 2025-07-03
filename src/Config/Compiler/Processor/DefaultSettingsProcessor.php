@@ -57,7 +57,7 @@ final class DefaultSettingsProcessor implements ProcessorInterface
                 'net_buffer_length' => 1000000,
                 'no_autocommit' => true,
                 'no_create_info' => false,
-                'no_data' => false,
+                'tables_no_data' => false,
                 'routines' => false,
                 'single_transaction' => true,
                 'skip_comments' => false,
