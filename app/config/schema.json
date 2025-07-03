@@ -201,6 +201,9 @@
                 "no_create_info": {
                     "type": "boolean"
                 },
+                "no_data": {
+                    "type": "boolean"
+                },
                 "routines": {
                     "type": "boolean"
                 },
