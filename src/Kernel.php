@@ -38,7 +38,7 @@ final class Kernel
 
         /** @var Command $defaultCommand */
         $defaultCommand = $this->container->get($command);
-        $application->add($defaultCommand);
+        $application->addCommand($defaultCommand);
         $application->setDefaultCommand((string) $defaultCommand->getName(), true);
         $application->run();
     }
