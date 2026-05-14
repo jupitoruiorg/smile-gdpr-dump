@@ -30,7 +30,7 @@
         "symfony/event-dispatcher": "^7.3",
         "symfony/finder": "^7.3",
         "symfony/yaml": "^7.3",
-        "theseer/tokenizer": "^1.2"
+        "theseer/tokenizer": "^1.2 || ^2.0"
     },
     "require-dev": {
         "php-parallel-lint/php-parallel-lint": "^1.4",
